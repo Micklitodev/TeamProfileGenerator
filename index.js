@@ -1,12 +1,14 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const Engineer = require('./lib/engineer');
+const Engineer = require("./lib/engineer");
 
 const objectsArr = [];
 
-const renderHtml = (fill) => {
+const renderHtml = (element) => {
+  const { name, certs, github, phone } = element;
+
   return `
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,10 +18,14 @@ const renderHtml = (fill) => {
     <link rel='stylesheet' href='./style.css'> 
 </head>
 <body>
- <card> 
- <div> email: ${fill} </div>
- </card> 
-    
+
+ <div class="card"> 
+  <h2> ${name} </h2>
+  <h3> ${certs} </h3> 
+  <h3> ${github} </h3>
+  <h3> ${phone} </h3>
+</div>
+
 </body>
 </html>
     `;
@@ -27,8 +33,7 @@ const renderHtml = (fill) => {
 
 const renderData = () => {
   objectsArr.forEach((element) => {
-    const { name, certs, github, phone } = element;
-    const fill = renderHtml(github);
+    const fill = renderHtml(element);
 
     fs.appendFile("index.html", fill, (err) => {
       err ? console.log(err) : console.log("sucess");
