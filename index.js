@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+
 const Engineer = require("./lib/engineer");
 const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
@@ -11,13 +12,24 @@ let html = "";
 
 const renderData = () => {
   objectsArr.forEach((element) => {
-    const { type, name, certs, github, phone } = element;
+    const { name, id, email } = element;
+    console.log(element);
     html += `<div class="card"> 
-    <h2> ${type} </h2>
+    <h2> ${element.getRole()} </h2>
     <h3> ${name} </h3>
-    <h3> ${certs} </h3> 
-    <a href='${github}' >  Github </a>
-    <h3> ${phone} </h3>
+    <h3> ${id} </h3> 
+    <h3> ${email} </h3>
+    ${
+      element.getRole() === "Engineer"
+        ? `<a href='${element.getGithub()}'  target='_blank'>  Github </a>`
+        : ""
+    }
+    ${
+      element.getRole() === "Manager"
+        ? `<h3> ${element.getOfficeNumber()} </h3>`
+        : ""
+    }
+    ${element.getRole() === "Intern" ? `<h3> ${element.getSchool()} </h3>` : ""}
   </div>`;
   });
   execute(html);
@@ -33,17 +45,20 @@ const decide = ({ type }) => {
   }
 };
 
-const createObject = ({ certs, name }, type) => {
+const createObject = (
+  { name, id, email, github, officeNumber, school },
+  type
+) => {
   if (type === "engineer") {
-    objectsArr.push(new Engineer(type, certs, name));
+    objectsArr.push(new Engineer(name, id, email, github));
     console.log("en");
   }
   if (type === "manager") {
-    objectsArr.push(new Manager(type, certs, name));
+    objectsArr.push(new Manager(name, id, email, officeNumber));
     console.log("mg");
   }
   if (type === "intern") {
-    objectsArr.push(new Intern(type, certs, name));
+    objectsArr.push(new Intern(name, id, email, school));
     console.log("it");
   }
   moreEmp();
@@ -54,13 +69,23 @@ const qlForEng = (type) => {
     .prompt([
       {
         type: "input",
-        message: "What is your name? ",
+        message: "What is this engineers name?  ",
         name: "name",
       },
       {
         type: "input",
-        message: "What certifications do you have?",
-        name: "certs",
+        message: "What is this engineers id?",
+        name: "id",
+      },
+      {
+        type: "input",
+        message: "What is this engineers email?",
+        name: "email",
+      },
+      {
+        type: "input",
+        message: "What is this engineers full github URL?",
+        name: "github",
       },
     ])
     .then((data) => {
@@ -73,13 +98,23 @@ const qlForMgmt = (type) => {
     .prompt([
       {
         type: "input",
-        message: "What is your name? ",
+        message: "What is the managers name?  ",
         name: "name",
       },
       {
         type: "input",
-        message: "What certifications do you have?",
-        name: "certs",
+        message: "What is the managers id?",
+        name: "id",
+      },
+      {
+        type: "input",
+        message: "What is the managers email?",
+        name: "email",
+      },
+      {
+        type: "input",
+        message: "What is the managers office number?",
+        name: "officeNumber",
       },
     ])
     .then((data) => {
@@ -92,13 +127,23 @@ const qlForIntern = (type) => {
     .prompt([
       {
         type: "input",
-        message: "What is your name? ",
+        message: "What is this interns name?  ",
         name: "name",
       },
       {
         type: "input",
-        message: "What certifications do you have?",
-        name: "certs",
+        message: "What is this interns id?",
+        name: "id",
+      },
+      {
+        type: "input",
+        message: "What is this interns email?",
+        name: "email",
+      },
+      {
+        type: "input",
+        message: "Where is this intern going to school?",
+        name: "school",
       },
     ])
     .then((data) => {
