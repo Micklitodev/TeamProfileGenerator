@@ -14,23 +14,28 @@ const renderData = () => {
   objectsArr.forEach((element) => {
     const { name, id, email } = element;
     console.log(element);
-    html += `<div class="card"> 
-    <h2> ${element.getRole()} </h2>
-    <h3> ${name} </h3>
-    <h3> ${id} </h3> 
-    <h3> ${email} </h3>
-    ${
-      element.getRole() === "Engineer"
-        ? `<a href='${element.getGithub()}'  target='_blank'>  Github </a>`
-        : ""
-    }
-    ${
-      element.getRole() === "Manager"
-        ? `<h3> ${element.getOfficeNumber()} </h3>`
-        : ""
-    }
-    ${element.getRole() === "Intern" ? `<h3> ${element.getSchool()} </h3>` : ""}
-  </div>`;
+    html += (
+    `<div class="${element.getRole() === 'Manager' ? `cardlg col-lg-10 col-10` : ` cardsm col-lg-2 col-10`}"> 
+      <h2> ${element.getRole()} </h2>
+      <br>
+      <h4> ${name} </h4>
+      <h4> ${id} </h4> 
+      <button> <a href="mailto:${email}">  Send Email  </a> </button>
+      ${
+        element.getRole() === "Engineer"
+          ? ` <button> <a href='${element.getGithub()}'  target='_blank'>  - Github -  </a> </button>`
+          : ""
+      }
+      ${
+        element.getRole() === "Manager"
+          ? `<h3> ${element.getOfficeNumber()} </h3>`
+          : ""
+      }
+      ${element.getRole() === "Intern" 
+          ? `<h3> ${element.getSchool()} </h3>` 
+          : ""
+      }
+  </div>`);
   });
   execute(html);
 };
