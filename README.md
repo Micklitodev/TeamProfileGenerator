@@ -22,7 +22,7 @@
 
   ## Link
   
-  [Click Here](https://github.com/micklitodev/teamprofilegenerator) to go to the repo link.
+  [Click Here](https://drive.google.com/file/d/1hr8V4mlGN0lCYEMbUCFQzT31UKwvtjbM/view) to go to the video link.
   
 
 
