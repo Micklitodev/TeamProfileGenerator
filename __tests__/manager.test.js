@@ -1,3 +1,5 @@
+// jest test for ../lib/manager.js   manager class
+
 const Manager = require('../lib/manager'); 
 
 describe('Manager', () => {

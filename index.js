@@ -1,3 +1,7 @@
+//read from bottom to top avoided hoisting function expressions. 
+
+// imports of libraries and classes from lib folder
+
 const inquirer = require("inquirer");
 
 const Engineer = require("./lib/engineer");
@@ -6,9 +10,16 @@ const Intern = require("./lib/intern");
 
 const execute = require("./src/helper");
 
+// takes the objects returned with .push()
+
 const objectsArr = [];
 
+//holds all rendered cards to be input
+
 let html = "";
+
+// renderData calls for each object within the object array to be added to html
+// variable as html. 
 
 const renderData = () => {
   objectsArr.forEach((element) => {
@@ -37,18 +48,14 @@ const renderData = () => {
       }
   </div>`);
   });
+  // execute function from helper.js that passes HTML inside html variable.
+
   execute(html);
 };
 
-const decide = ({ type }) => {
-  if (type === "engineer") {
-    qlForEng(type);
-  } else if (type === "manager") {
-    qlForMgmt(type);
-  } else if (type === "intern") {
-    qlForIntern(type);
-  }
-};
+// createObject function destructures variables form then return data of the ql
+// then uses conditional statments to decided which object to create and pushh into
+// objectsArr
 
 const createObject = (
   { name, id, email, github, officeNumber, school },
@@ -56,18 +63,17 @@ const createObject = (
 ) => {
   if (type === "engineer") {
     objectsArr.push(new Engineer(name, id, email, github));
-    console.log("en");
   }
   if (type === "manager") {
     objectsArr.push(new Manager(name, id, email, officeNumber));
-    console.log("mg");
   }
   if (type === "intern") {
     objectsArr.push(new Intern(name, id, email, school));
-    console.log("it");
   }
   moreEmp();
 };
+
+// question line for Engineer selection
 
 const qlForEng = (type) => {
   inquirer
@@ -98,6 +104,8 @@ const qlForEng = (type) => {
     });
 };
 
+// question line for Manager selection
+
 const qlForMgmt = (type) => {
   inquirer
     .prompt([
@@ -126,6 +134,8 @@ const qlForMgmt = (type) => {
       createObject(data, type);
     });
 };
+
+// question line for Intern selection
 
 const qlForIntern = (type) => {
   inquirer
@@ -156,6 +166,24 @@ const qlForIntern = (type) => {
     });
 };
 
+
+// decided function makes the decision of what type of question line (ql) to
+// execute. 
+
+const decide = ({ type }) => {
+  if (type === "engineer") {
+    qlForEng(type);
+  } else if (type === "manager") {
+    qlForMgmt(type);
+  } else if (type === "intern") {
+    qlForIntern(type);
+  }
+};
+
+
+
+// app function is the initial start of the app that passes data to decide func
+
 const app = () => {
   inquirer
     .prompt([
@@ -170,6 +198,9 @@ const app = () => {
       decide(data);
     });
 };
+
+// moreEmp func decideds if the app should be recalled or if the prompts should
+// exit out and render the pushed data to objectArr 
 
 const moreEmp = () => {
   inquirer
@@ -190,4 +221,6 @@ const moreEmp = () => {
       }
     });
 };
+
+// Call of the app func
 app();

@@ -1,5 +1,8 @@
 const fs = require("fs");
 
+// writeHtml returns the html declaration and head closing html tag, data argument
+// is the card data that is returned by index.js. 
+
 const writeHtml = (data) => {
   return `
   <!DOCTYPE html>
@@ -30,6 +33,11 @@ const writeHtml = (data) => {
   </html>
     `;
 };
+
+// execute is exported and used inside of index.js the data passed in is param
+// execute then writes the html by using fs.write, param is a place holder for
+// card data fromm the html variable in index.js. 
+
 const execute = async (param) => {
   const fill = writeHtml(param);
   fs.writeFile("./dist/index.html", fill, (err) => {

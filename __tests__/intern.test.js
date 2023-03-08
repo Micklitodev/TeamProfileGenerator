@@ -1,3 +1,5 @@
+// jest test for ../lib/intern.js   intern class
+
 const Intern = require('../lib/intern');
 
 describe('Intern', () => {

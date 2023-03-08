@@ -1,3 +1,5 @@
+// jest test for ../lib/employee.js   employee class
+
 const Employee = require("../lib/employee");
 
 describe("Employee", () => {
